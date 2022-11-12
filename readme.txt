@@ -1,5 +1,7 @@
 The repository contains the code files.
 
+At first setup the MySQL server at your Local Machine
+
 Login using the following method
 -Use the postman to send POST request http://localhost:8080/api/login
 -In body section, select x-www-form-urlencoded, use 2 Keys
