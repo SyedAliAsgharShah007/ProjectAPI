@@ -5,8 +5,12 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.securityServices.domain.AppUser;
+import com.example.securityServices.domain.Comment;
+import com.example.securityServices.domain.Post;
 import com.example.securityServices.domain.Role;
 import com.example.securityServices.services.AppUserServices;
+import com.example.securityServices.services.CommentServices;
+import com.example.securityServices.services.PostServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +40,27 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 @RestController @RequiredArgsConstructor @RequestMapping("/api")
 public class AppUserResource {
     private final AppUserServices userServices;
+    private final PostServices postServices;
+    private final CommentServices commentServices;
 
     @GetMapping("/users")
     public ResponseEntity<List<AppUser>>getUser(){
         return ResponseEntity.ok().body(userServices.getAppUsers());
     }
+
+    //Added Code
+    @GetMapping("/posts")
+    public ResponseEntity<List<Post>>getPost(){
+        return ResponseEntity.ok().body(postServices.getPosts());
+    }
+    //Added Code
+
+    //Added Code
+    @GetMapping("/comments")
+    public ResponseEntity<List<Comment>>getComments(){
+        return ResponseEntity.ok().body(commentServices.getComment());
+    }
+    //Added Code
 
     @PostMapping("/user/save")
     public ResponseEntity<AppUser>saveAppUser(@RequestBody AppUser appUser){
