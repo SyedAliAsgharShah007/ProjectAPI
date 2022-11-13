@@ -14,3 +14,13 @@ Send following GET request ( In Header Section use KEY: Authorization  | Value: 
 http://localhost:8080/api/users
 http://localhost:8080/api/posts
 http://localhost:8080/api/comments
+
+New Added Code
+
+Integration of 3rd Party API ( Endpoints secured with JWT tokens - access_token and refresh_token)
+
+Send following GET request ( In Header Section use KEY: Authorization  | Value: Bearer {access_token}
+http://localhost:8080/api/getUsers
+http://localhost:8080/api/getPosts
+http://localhost:8080/api/getComments
+
