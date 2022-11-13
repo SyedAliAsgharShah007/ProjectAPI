@@ -4,6 +4,9 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.securityServices.dataObject.CommentObject;
+import com.example.securityServices.dataObject.PostObject;
+import com.example.securityServices.dataObject.UserObject;
 import com.example.securityServices.domain.AppUser;
 import com.example.securityServices.domain.Comment;
 import com.example.securityServices.domain.Post;
@@ -11,18 +14,26 @@ import com.example.securityServices.domain.Role;
 import com.example.securityServices.services.AppUserServices;
 import com.example.securityServices.services.CommentServices;
 import com.example.securityServices.services.PostServices;
+import com.example.securityServices.services.ServiceLayer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.ServletSecurityElement;
@@ -123,6 +134,39 @@ public class AppUserResource {
         }
     }
 
+    //Added Code
+
+    private final ServiceLayer serviceLayer;
+    private RestTemplate restTemplate = new RestTemplate();
+
+//    @GetMapping("/newusers")
+//    public ResponseEntity<CommentObject> getData()
+//    {
+//        return new ResponseEntity<>(serviceLayer.consumeAPI(), HttpStatus.OK);
+//    }
+
+    @GetMapping("/getComments")
+    public CommentObject[] getApiComments()
+    {
+        CommentObject[] commentObject = restTemplate.getForObject("https://gorest.co.in/public/v2/comments", CommentObject[].class);
+        return commentObject;
+    }
+
+    @GetMapping("/getPosts")
+    public PostObject[] getApiPosts()
+    {
+        PostObject[] postObject = restTemplate.getForObject("https://gorest.co.in/public/v2/posts", PostObject[].class);
+        return postObject;
+    }
+
+    @GetMapping("/getUsers")
+    public UserObject[] getApiUsers()
+    {
+        UserObject[] userObject = restTemplate.getForObject("https://gorest.co.in/public/v2/users", UserObject[].class);
+        return userObject;
+    }
+
+    //Added Code
 }
 
 @Data
